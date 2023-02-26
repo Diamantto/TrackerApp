@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">TrackerApp</string>
+    <string-array name="filter_options">
+        <item>Date</item>
+        <item>Running</item>
+        <item>Distance</item>
+        <item>Average Speed</item>
+        <item>Calories burned</item>
+    </string-array>
+</resources>
