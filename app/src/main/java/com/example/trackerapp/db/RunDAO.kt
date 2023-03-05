@@ -2,6 +2,7 @@ package com.example.trackerapp.db
 
 import androidx.lifecycle.LiveData
 import androidx.room.*
+import com.example.trackerapp.other.TypeResults
 
 @Dao
 interface RunDAO {
@@ -12,22 +13,27 @@ interface RunDAO {
     @Delete
     suspend fun deleteRun(run: Run)
 
-//    @Query("""
-//        SELECT * FROM running_table
-//        ORDER BY
-//        CASE WHEN :column = 'timestamp'  THEN timestamp END DESC,
-//        CASE WHEN :column = 'timemili' THEN timeInMillis END DESC,
-//        CASE WHEN :column = 'calories' THEN caloriesBurned END DESC,
-//        CASE WHEN :column = 'speed'  THEN averageSpeedInKMH END DESC,
-//        CASE WHEN :column = 'distance' THEN distanceInMeters END DESC,
-//    """)
-//    suspend fun filterBy(column : String) : LiveData<List<Run>>
+    @Query(
+        "SELECT * FROM running_table ORDER BY " +
+                "CASE :column " +
+                "WHEN 'timestamp' THEN timestamp " +
+                "WHEN 'timemili' THEN timeInMillis " +
+                "WHEN 'calories' THEN caloriesBurned " +
+                "WHEN 'speed' THEN avgSpeedInKMH " +
+                "WHEN 'distance' THEN distanceInMeters " +
+                "END DESC"
+    )
+    fun getSortedRunsBy(column: String): LiveData<List<Run>>
 
-    @Query("SELECT * FROM Run ORDER BY :runParams DESC")
-    fun getAllRuns(runParams: String): LiveData<List<Run>>
 
-    @Query("SELECT SUM(:runParams) FROM Run")
-    fun <T> getTotalResults(runParams: String): LiveData<T>
+    @Query(
+        "SELECT SUM(CASE WHEN :runParams = 'timemili' THEN timeInMillis ELSE 0 END) as totalTimeInMillis, " +
+                "SUM(CASE WHEN :runParams = 'calories' THEN caloriesBurned ELSE 0 END) as totalCaloriesBurned, " +
+                "SUM(CASE WHEN :runParams = 'distance' THEN distanceInMeters ELSE 0 END) as totalDistance, " +
+                "AVG(CASE WHEN :runParams = 'speed' THEN avgSpeedInKMH ELSE 0 END) as totalAvgSpeed " +
+                "FROM running_table"
+    )
+    fun getTotalResults(runParams: String): LiveData<TypeResults>
 
 
 }
