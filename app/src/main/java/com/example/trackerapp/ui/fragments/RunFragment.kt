@@ -7,6 +7,7 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.example.trackerapp.R
 import com.example.trackerapp.databinding.FragmentRunBinding
+import com.example.trackerapp.ui.MainActivity
 import com.example.trackerapp.ui.viewmodels.MainViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -20,8 +21,12 @@ class RunFragment : Fragment(R.layout.fragment_run) {
         super.onViewCreated(view, savedInstanceState)
         binding = FragmentRunBinding.bind(view)
 
+        (activity as MainActivity).requestLocationPermissions()
+
         binding.fab.setOnClickListener {
             findNavController().navigate(R.id.action_runFragment_to_trackingFragment)
         }
+
+
     }
 }
