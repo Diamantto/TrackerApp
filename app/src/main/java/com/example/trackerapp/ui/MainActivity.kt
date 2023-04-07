@@ -1,6 +1,7 @@
 package com.example.trackerapp.ui
 
 import android.Manifest
+import android.content.Intent
 import android.os.Build
 import android.os.Bundle
 import android.view.View
@@ -10,6 +11,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.setupWithNavController
 import com.example.trackerapp.R
 import com.example.trackerapp.databinding.ActivityMainBinding
+import com.example.trackerapp.other.Constants.ACTION_SHOW_TRACKING_FRAGMENT
 import com.example.trackerapp.other.Constants.REQUEST_CODE_LOCATION_PERMISSION
 import com.example.trackerapp.other.TrackingUtility
 import dagger.hilt.android.AndroidEntryPoint
@@ -19,6 +21,7 @@ import pub.devrel.easypermissions.EasyPermissions
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity(), EasyPermissions.PermissionCallbacks {
     private lateinit var binding: ActivityMainBinding
+    private lateinit var navHostFragment: NavHostFragment
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -27,9 +30,11 @@ class MainActivity : AppCompatActivity(), EasyPermissions.PermissionCallbacks {
         setContentView(view)
 
         setSupportActionBar(binding.toolbar)
-        val navHostFragment =
+        navHostFragment =
             supportFragmentManager.findFragmentById(R.id.navHostFragment) as NavHostFragment
         binding.bottomNavigationView.setupWithNavController(navHostFragment.navController)
+
+        navigateToTrackingFragmentIfNeeded(intent)
 
         navHostFragment.findNavController().addOnDestinationChangedListener { _, destination, _ ->
             when (destination.id) {
@@ -39,6 +44,17 @@ class MainActivity : AppCompatActivity(), EasyPermissions.PermissionCallbacks {
             }
         }
 
+    }
+
+    override fun onNewIntent(intent: Intent?) {
+        super.onNewIntent(intent)
+        navigateToTrackingFragmentIfNeeded(intent)
+    }
+
+    private fun navigateToTrackingFragmentIfNeeded(intent: Intent?) {
+        if(intent?.action == ACTION_SHOW_TRACKING_FRAGMENT) {
+            navHostFragment.findNavController().navigate(R.id.action_global_trackingFragment)
+        }
     }
 
     fun requestLocationPermissions(bgLocation: Boolean = false) {
