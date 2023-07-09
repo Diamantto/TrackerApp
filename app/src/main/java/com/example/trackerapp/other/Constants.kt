@@ -12,4 +12,8 @@ object Constants {
     const val NOTIFICATION_CHANNEL_ID = "tracking_channel"
     const val NOTIFICATION_CHANNEL_NAME = "Tracking"
     const val NOTIFICATION_ID = 1
+
+    const val LOCATION_UPDATE_INTERVAL = 5000L
+    const val LOCATION_FASTEST_INTERVAL = 2000L
+    const val LOCATION_MAX_DELAY_INTERVAL = 5000L
 }

@@ -5,7 +5,6 @@ import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.navigation.fragment.findNavController
 import com.example.trackerapp.R
 import com.example.trackerapp.databinding.FragmentTrackingBinding
 import com.example.trackerapp.other.Constants.ACTION_START_OR_RESUME_SERVICE
@@ -67,6 +66,11 @@ class TrackingFragment : Fragment(R.layout.fragment_tracking) {
     override fun onLowMemory() {
         super.onLowMemory()
         binding.mapView.onLowMemory()
+    }
+
+    override fun onDestroyView() {
+        binding.mapView.onDestroy()
+        super.onDestroyView()
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
