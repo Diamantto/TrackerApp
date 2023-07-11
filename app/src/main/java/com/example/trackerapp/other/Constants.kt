@@ -1,5 +1,7 @@
 package com.example.trackerapp.other
 
+import android.graphics.Color
+
 object Constants {
 
     const val RUNNING_DATABASE_NAME: String = "running_db"
@@ -16,4 +18,8 @@ object Constants {
     const val LOCATION_UPDATE_INTERVAL = 5000L
     const val LOCATION_FASTEST_INTERVAL = 2000L
     const val LOCATION_MAX_DELAY_INTERVAL = 5000L
+
+    const val POLYLINE_COLOR = Color.RED
+    const val POLYLINE_WIDTH = 8F
+    const val MAP_ZOOM = 15f
 }

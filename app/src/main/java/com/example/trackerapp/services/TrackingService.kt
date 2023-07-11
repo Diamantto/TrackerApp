@@ -76,11 +76,12 @@ class TrackingService : LifecycleService() {
                         isFirstRun = false
                     } else {
                         Timber.d("resuming service")
+                        startForegroundService()
                     }
                 }
 
                 ACTION_PAUSE_SERVICE -> {
-                    Timber.d("Paused service")
+                    pauseService()
                 }
 
                 ACTION_STOP_SERVICE -> {
@@ -89,6 +90,10 @@ class TrackingService : LifecycleService() {
             }
         }
         return super.onStartCommand(intent, flags, startId)
+    }
+
+    private fun pauseService() {
+        isTracking.postValue(false)
     }
 
     @SuppressLint("MissingPermission")
@@ -109,7 +114,7 @@ class TrackingService : LifecycleService() {
         }
     }
 
-    val locationCallback = object : LocationCallback() {
+    private val locationCallback = object : LocationCallback() {
         override fun onLocationResult(result: LocationResult) {
             super.onLocationResult(result)
             if (isTracking.value!!) {
@@ -149,9 +154,12 @@ class TrackingService : LifecycleService() {
         createNotificationChannel(notificationManager)
 
         val notificationBuilder =
-            NotificationCompat.Builder(this, NOTIFICATION_CHANNEL_ID).setAutoCancel(false)
-                .setOngoing(true).setSmallIcon(R.drawable.ic_directions_run_black_24dp)
-                .setContentTitle("TrackerApp").setContentText("00:00:00")
+            NotificationCompat.Builder(this, NOTIFICATION_CHANNEL_ID)
+                .setAutoCancel(false)
+                .setOngoing(true)
+                .setSmallIcon(R.drawable.ic_directions_run_black_24dp)
+                .setContentTitle("TrackerApp")
+                .setContentText("00:00:00")
                 .setContentIntent(getMainActivityPendingIntent())
                 .setCategory(Notification.CATEGORY_NAVIGATION)
 
