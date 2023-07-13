@@ -16,8 +16,8 @@ interface RunDAO {
     @Query(
         "SELECT * FROM running_table ORDER BY " +
                 "CASE :column " +
-                "WHEN 'timestamp' THEN timestamp " +
-                "WHEN 'timemili' THEN timeInMillis " +
+                "WHEN 'date' THEN timestamp " +
+                "WHEN 'duration' THEN timeInMillis " +
                 "WHEN 'calories' THEN caloriesBurned " +
                 "WHEN 'speed' THEN avgSpeedInKMH " +
                 "WHEN 'distance' THEN distanceInMeters " +
