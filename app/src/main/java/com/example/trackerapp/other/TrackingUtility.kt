@@ -32,7 +32,7 @@ object TrackingUtility {
         val seconds = TimeUnit.MILLISECONDS.toSeconds(milliseconds)
         milliseconds -= TimeUnit.SECONDS.toMillis(seconds)
         milliseconds /= 10
-        return if(!includeMillis) String.format("%02d:%02d:%02d", hours, minutes, seconds)
+        return if (!includeMillis) String.format("%02d:%02d:%02d", hours, minutes, seconds)
         else String.format("%02d:%02d:%02d:%02d", hours, minutes, seconds, milliseconds)
 
     }
