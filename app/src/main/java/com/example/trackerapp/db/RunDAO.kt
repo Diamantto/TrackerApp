@@ -27,7 +27,7 @@ interface RunDAO {
 
 
     @Query(
-        "SELECT SUM(CASE WHEN :runParams = 'timemili' THEN timeInMillis ELSE 0 END) as totalTimeInMillis, " +
+        "SELECT SUM(CASE WHEN :runParams = 'duration' THEN timeInMillis ELSE 0 END) as totalTimeInMillis, " +
                 "SUM(CASE WHEN :runParams = 'calories' THEN caloriesBurned ELSE 0 END) as totalCaloriesBurned, " +
                 "SUM(CASE WHEN :runParams = 'distance' THEN distanceInMeters ELSE 0 END) as totalDistance, " +
                 "AVG(CASE WHEN :runParams = 'speed' THEN avgSpeedInKMH ELSE 0 END) as totalAvgSpeed " +

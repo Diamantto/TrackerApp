@@ -41,6 +41,7 @@ class MainActivity : AppCompatActivity(), EasyPermissions.PermissionCallbacks {
             when (destination.id) {
                 R.id.settingsFragment, R.id.runFragment, R.id.statisticsFragment ->
                     binding.bottomNavigationView.visibility = View.VISIBLE
+
                 else -> binding.bottomNavigationView.visibility = View.GONE
             }
         }
@@ -53,7 +54,7 @@ class MainActivity : AppCompatActivity(), EasyPermissions.PermissionCallbacks {
     }
 
     private fun navigateToTrackingFragmentIfNeeded(intent: Intent?) {
-        if(intent?.action == ACTION_SHOW_TRACKING_FRAGMENT) {
+        if (intent?.action == ACTION_SHOW_TRACKING_FRAGMENT) {
             navHostFragment.findNavController().navigate(R.id.action_global_trackingFragment)
         }
     }
