@@ -29,4 +29,8 @@ class MainViewModel @Inject constructor(
             result?.let { runs.value = it }
         }
     }
+
+    fun deleteRun(run: Run) = viewModelScope.launch {
+        mainRepository.deleteRun(run)
+    }
 }

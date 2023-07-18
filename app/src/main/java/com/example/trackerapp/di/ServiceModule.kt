@@ -35,7 +35,7 @@ object ServiceModule {
     ): PendingIntent = PendingIntent.getActivity(
         app, 0, Intent(app, MainActivity::class.java).also {
             it.action = Constants.ACTION_SHOW_TRACKING_FRAGMENT
-        }, PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT
+        }, PendingIntent.FLAG_IMMUTABLE
     )
 
     @Provides
